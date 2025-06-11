@@ -71,3 +71,12 @@ class Seq2Seq:
         
         return output_logits, all_attention_weights
     
+    def parameters(self) -> list[torch.Tensor]:
+        params = self.encoder.parameters() + self.decoder.parameters()
+        return params
+
+    def train_mode(self):
+        pass
+
+    def eval_mode(self):
+        pass
