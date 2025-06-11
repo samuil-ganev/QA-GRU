@@ -7,7 +7,10 @@ import math
 import random
 import os
 
-from src.model_components import Encoder, Decoder, Seq2Seq
+from src.model_components.encoder import Encoder
+from src.model_components.decoder import Decoder
+from src.model_components.seq2seq import Seq2Seq
+
 from src.pretrained_utils import PretrainedAssets
 from src.utils import save_parameters, load_parameters, count_parameters, format_time
 import config
@@ -69,7 +72,7 @@ def load_qa_data(filepath: str) -> tuple[list[str], list[str]]:
     if not questions or not answers:
         print('Проблем с данните')
     else:
-        print(f'Заредени са {len(questions)} двойки Q\A')
+        print(f'Заредени са {len(questions)} двойки Q\\A')
     return questions, answers
 
 def train_epoch(model: Seq2Seq,
@@ -128,7 +131,6 @@ def evaluate_epoch(model: Seq2Seq,
             src_ids = batch['src_ids'].to(device)
             trg_ids = batch['trg_ids'].to(device)
 
-            # For evaluation, teacher_forcing_ratio is 0
             output_logits, _ = model.forward(src_input_ids=src_ids,
                                              trg_input_ids=trg_ids, # Still provide for length matching
                                              teacher_forcing_ratio=0.0)
@@ -181,7 +183,7 @@ def run_training():
         encoder_hidden_dim=config.ENCODER_HIDDEN_DIM,
         decoder_hidden_dim=config.DECODER_HIDDEN_DIM, # Ensure compatible
         device=device,
-        dtype=torch.float32 # Default dtype
+        dtype=torch.float32
     )
     decoder = Decoder(
         output_vocab_size=output_vocab_size,

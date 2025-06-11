@@ -1,8 +1,8 @@
 import torch
 import random
 from src.pretrained_utils import PretrainedAssets
-from encoder import Encoder
-from decoder import Decoder
+from src.model_components.encoder import Encoder
+from src.model_components.decoder import Decoder
 
 class Seq2Seq:
     def __init__(self,

@@ -11,7 +11,7 @@ class PretrainedAssets:
         model.to(device)
 
         if hasattr(model, 'embeddings') and hasattr(model.embeddings, 'word_embeddings'):
-            self.embedding_weights = model.embedding.word_embeddings.weight.detach().clone().to(device)
+            self.embedding_weights = model.embeddings.word_embeddings.weight.detach().clone().to(device)
         elif hasattr(model, 'shared'):
             self.embedding_weights = model.shared.weight.detach().clone().to(device)
         elif hasattr(model, 'wte'):

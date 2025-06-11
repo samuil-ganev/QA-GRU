@@ -26,12 +26,12 @@ class Attention:
         proj_enc = self.W_enc(encoder_outputs)
         # proj_enc.shape = (batch_size, seq_len_enc, attn_dim)
 
-        scores = self.v_attn(proj_enc + proj_dec_expanded)
+        scores = self.v_att(proj_enc + proj_dec_expanded)
         # scores.shape = (batch_size, seq_len_enc, 1)
         scores = scores.squeeze(2)
 
         if encoder_output_mask is not None:
-            scores.masdes_fill_(encoder_output_mask == 0, -1e9)
+            scores.masked_fill_(encoder_output_mask == 0, -1e9)
         attention_weights = F.softmax(scores, dim=1)
         # attention_weights.shape = (batch_size, seq_len_enc)
 
