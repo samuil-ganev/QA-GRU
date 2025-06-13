@@ -216,17 +216,17 @@ def run_training():
         print(f'\nEpoch: {epoch+1:02}/{config.NUM_EPOCHS:02} | Time: {format_time(epoch_duration)}')
         print(f'\tTrain Loss: {train_loss:.3f} | Train PPL: {math.exp(train_loss):7.3f}')
     
-    if val_dataloader:
-        valid_loss = evaluate_epoch(model, val_dataloader, criterion, device)
-        print(f'\t Val. Loss: {valid_loss:.3f} |  Val. PPL: {math.exp(valid_loss):7.3f}')
-        if valid_loss < best_valid_loss:
-            best_valid_loss = valid_loss
+        if val_dataloader:
+            valid_loss = evaluate_epoch(model, val_dataloader, criterion, device)
+            print(f'\t Val. Loss: {valid_loss:.3f} |  Val. PPL: {math.exp(valid_loss):7.3f}')
+            if valid_loss < best_valid_loss:
+                best_valid_loss = valid_loss
+                save_parameters(model.parameters(), config.MODEL_SAVE_PATH)
+                print(f'\tНов най-добър резултат. Моделът се запазва в {config.MODEL_SAVE_PATH}')
+        else:
             save_parameters(model.parameters(), config.MODEL_SAVE_PATH)
-            print(f'\tНов най-добър резултат. Моделът се запазва в {config.MODEL_SAVE_PATH}')
-    else:
-        save_parameters(model.parameters(), config.MODEL_SAVE_PATH)
-        print(f'\tМоделът се запазва в {config.MODEL_SAVE_PATH}')
-    print('-' * 80)
+            print(f'\tМоделът се запазва в {config.MODEL_SAVE_PATH}')
+        print('-' * 80)
 
     total_training_time = time.time() - total_training_start_time
     print(f'--- Тренирането приключи за {format_time(total_training_time)} ---')

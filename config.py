@@ -3,7 +3,7 @@ from src.utils import get_device
 
 DEVICE = get_device()
 
-PRETRAINED_MODEL_NAME = 'bert-base-uncased'
+PRETRAINED_MODEL_NAME = 'bert-base-multilingual-cased'
 
 ENCODER_HIDDEN_DIM = 64
 DECODER_HIDDEN_DIM = 64
